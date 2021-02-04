@@ -1,7 +1,5 @@
 package domain
 
-import "context"
-
 type User struct {
 	Id       string `json:"id"`
 	Name     string `json:"name"`
@@ -17,18 +15,18 @@ type UserOutput struct{
 
 type UserUsecase interface {
 	FetchAll() (res []UserOutput, err error)
-	GetById(ctx context.Context, id int64) (User, err error)
-	GetUserItem(ctx context.Context, email string) (Item, err error)
-	Update(ctx context.Context, u *User) error
-	Insert(ctx context.Context, u *User) error
-	Delete(ctx context.Context, u *User) error
+	GetById(id int64) (User, err error)
+	GetUserItem(email string) (Item, err error)
+	Update(u *User) error
+	Insert(u *User) error
+	Delete(u *User) error
 }
 
 type UserRepository interface {
 	FetchAll() (res []UserOutput, err error)
-	GetById(ctx context.Context, id int64) (User, err error)
-	GetUserItem(ctx context.Context, email string) (Item, err error)
-	Update(ctx context.Context, u *User) error
-	Insert(ctx context.Context, u *User) error
-	Delete(ctx context.Context, u *User) error
+	GetById(id int64) (User, err error)
+	GetUserItem(email string) (Item, err error)
+	Update(u *User) error
+	Insert(u *User) error
+	Delete(u *User) error
 }

@@ -18,5 +18,5 @@ type ItemOutput struct {
 
 type ItemRepository interface {
 	FetchAll() (res []ItemOutput, err error)
-	GetById(ctx context.Context) (Item, error)
+	GetById(ctx context.Context, id int64) (Item, error)
 }

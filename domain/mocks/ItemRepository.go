@@ -37,20 +37,20 @@ func (_m *ItemRepository) FetchAll() ([]domain.ItemOutput, error) {
 	return r0, r1
 }
 
-// GetById provides a mock function with given fields: ctx
-func (_m *ItemRepository) GetById(ctx context.Context) (domain.Item, error) {
-	ret := _m.Called(ctx)
+// GetById provides a mock function with given fields: ctx, id
+func (_m *ItemRepository) GetById(ctx context.Context, id int64) (domain.Item, error) {
+	ret := _m.Called(ctx, id)
 
 	var r0 domain.Item
-	if rf, ok := ret.Get(0).(func(context.Context) domain.Item); ok {
-		r0 = rf(ctx)
+	if rf, ok := ret.Get(0).(func(context.Context, int64) domain.Item); ok {
+		r0 = rf(ctx, id)
 	} else {
 		r0 = ret.Get(0).(domain.Item)
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(context.Context) error); ok {
-		r1 = rf(ctx)
+	if rf, ok := ret.Get(1).(func(context.Context, int64) error); ok {
+		r1 = rf(ctx, id)
 	} else {
 		r1 = ret.Error(1)
 	}
