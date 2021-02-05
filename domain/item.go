@@ -1,7 +1,5 @@
 package domain
 
-import "context"
-
 type Item struct {
 	Id       	 string `json:"id"`
 	User_id		 string `json:"user_id"`
@@ -10,13 +8,7 @@ type Item struct {
 	App_password string `json:"app_password"`
 }
 
-type ItemOutput struct {
-	App_name     string `json:"app_name"`
-	App_email 	 string `json:"app_email"`
-	App_password string `json:"app_password"`
-}
-
 type ItemRepository interface {
-	FetchAll() (res []ItemOutput, err error)
-	GetById(ctx context.Context, id int64) (Item, error)
+	FetchAll(user_id int64) (res []Item, err error)
+	GetByName(user_id int64, appName string) (i Item, err error)
 }

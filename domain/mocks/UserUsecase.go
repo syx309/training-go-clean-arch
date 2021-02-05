@@ -3,8 +3,6 @@
 package mocks
 
 import (
-	context "context"
-
 	mock "github.com/stretchr/testify/mock"
 	domain "gitlab.com/alfred_soegiarto/training-clean-arch/domain"
 )
@@ -14,13 +12,13 @@ type UserUsecase struct {
 	mock.Mock
 }
 
-// Delete provides a mock function with given fields: ctx, u
-func (_m *UserUsecase) Delete(ctx context.Context, u *domain.User) error {
-	ret := _m.Called(ctx, u)
+// Delete provides a mock function with given fields: id
+func (_m *UserUsecase) Delete(id int64) error {
+	ret := _m.Called(id)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, *domain.User) error); ok {
-		r0 = rf(ctx, u)
+	if rf, ok := ret.Get(0).(func(int64) error); ok {
+		r0 = rf(id)
 	} else {
 		r0 = ret.Error(0)
 	}
@@ -29,15 +27,15 @@ func (_m *UserUsecase) Delete(ctx context.Context, u *domain.User) error {
 }
 
 // FetchAll provides a mock function with given fields:
-func (_m *UserUsecase) FetchAll() ([]domain.UserOutput, error) {
+func (_m *UserUsecase) FetchAll() ([]domain.User, error) {
 	ret := _m.Called()
 
-	var r0 []domain.UserOutput
-	if rf, ok := ret.Get(0).(func() []domain.UserOutput); ok {
+	var r0 []domain.User
+	if rf, ok := ret.Get(0).(func() []domain.User); ok {
 		r0 = rf()
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]domain.UserOutput)
+			r0 = ret.Get(0).([]domain.User)
 		}
 	}
 
@@ -51,20 +49,20 @@ func (_m *UserUsecase) FetchAll() ([]domain.UserOutput, error) {
 	return r0, r1
 }
 
-// GetById provides a mock function with given fields: ctx, id
-func (_m *UserUsecase) GetById(ctx context.Context, id int64) (error, error) {
-	ret := _m.Called(ctx, id)
+// GetById provides a mock function with given fields: id
+func (_m *UserUsecase) GetById(id int64) (domain.User, error) {
+	ret := _m.Called(id)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, int64) error); ok {
-		r0 = rf(ctx, id)
+	var r0 domain.User
+	if rf, ok := ret.Get(0).(func(int64) domain.User); ok {
+		r0 = rf(id)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(domain.User)
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(context.Context, int64) error); ok {
-		r1 = rf(ctx, id)
+	if rf, ok := ret.Get(1).(func(int64) error); ok {
+		r1 = rf(id)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -72,20 +70,20 @@ func (_m *UserUsecase) GetById(ctx context.Context, id int64) (error, error) {
 	return r0, r1
 }
 
-// GetUserItem provides a mock function with given fields: ctx, email
-func (_m *UserUsecase) GetUserItem(ctx context.Context, email string) (error, error) {
-	ret := _m.Called(ctx, email)
+// GetUserItem provides a mock function with given fields: email
+func (_m *UserUsecase) GetUserItem(email string) (domain.Item, error) {
+	ret := _m.Called(email)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, string) error); ok {
-		r0 = rf(ctx, email)
+	var r0 domain.Item
+	if rf, ok := ret.Get(0).(func(string) domain.Item); ok {
+		r0 = rf(email)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(domain.Item)
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(context.Context, string) error); ok {
-		r1 = rf(ctx, email)
+	if rf, ok := ret.Get(1).(func(string) error); ok {
+		r1 = rf(email)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -93,13 +91,13 @@ func (_m *UserUsecase) GetUserItem(ctx context.Context, email string) (error, er
 	return r0, r1
 }
 
-// Insert provides a mock function with given fields: ctx, u
-func (_m *UserUsecase) Insert(ctx context.Context, u *domain.User) error {
-	ret := _m.Called(ctx, u)
+// Insert provides a mock function with given fields: u
+func (_m *UserUsecase) Insert(u *domain.NewUser) error {
+	ret := _m.Called(u)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, *domain.User) error); ok {
-		r0 = rf(ctx, u)
+	if rf, ok := ret.Get(0).(func(*domain.NewUser) error); ok {
+		r0 = rf(u)
 	} else {
 		r0 = ret.Error(0)
 	}
@@ -107,13 +105,13 @@ func (_m *UserUsecase) Insert(ctx context.Context, u *domain.User) error {
 	return r0
 }
 
-// Update provides a mock function with given fields: ctx, u
-func (_m *UserUsecase) Update(ctx context.Context, u *domain.User) error {
-	ret := _m.Called(ctx, u)
+// Update provides a mock function with given fields: id, u
+func (_m *UserUsecase) Update(id int64, u *domain.NewUser) error {
+	ret := _m.Called(id, u)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, *domain.User) error); ok {
-		r0 = rf(ctx, u)
+	if rf, ok := ret.Get(0).(func(int64, *domain.NewUser) error); ok {
+		r0 = rf(id, u)
 	} else {
 		r0 = ret.Error(0)
 	}

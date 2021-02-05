@@ -3,8 +3,6 @@
 package mocks
 
 import (
-	context "context"
-
 	mock "github.com/stretchr/testify/mock"
 	domain "gitlab.com/alfred_soegiarto/training-clean-arch/domain"
 )
@@ -14,13 +12,13 @@ type UserRepository struct {
 	mock.Mock
 }
 
-// Delete provides a mock function with given fields: ctx, u
-func (_m *UserRepository) Delete(ctx context.Context, u *domain.User) error {
-	ret := _m.Called(ctx, u)
+// Delete provides a mock function with given fields: id
+func (_m *UserRepository) Delete(id int64) error {
+	ret := _m.Called(id)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, *domain.User) error); ok {
-		r0 = rf(ctx, u)
+	if rf, ok := ret.Get(0).(func(int64) error); ok {
+		r0 = rf(id)
 	} else {
 		r0 = ret.Error(0)
 	}
@@ -29,15 +27,15 @@ func (_m *UserRepository) Delete(ctx context.Context, u *domain.User) error {
 }
 
 // FetchAll provides a mock function with given fields:
-func (_m *UserRepository) FetchAll() ([]domain.UserOutput, error) {
+func (_m *UserRepository) FetchAll() ([]domain.User, error) {
 	ret := _m.Called()
 
-	var r0 []domain.UserOutput
-	if rf, ok := ret.Get(0).(func() []domain.UserOutput); ok {
+	var r0 []domain.User
+	if rf, ok := ret.Get(0).(func() []domain.User); ok {
 		r0 = rf()
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]domain.UserOutput)
+			r0 = ret.Get(0).([]domain.User)
 		}
 	}
 
@@ -51,20 +49,20 @@ func (_m *UserRepository) FetchAll() ([]domain.UserOutput, error) {
 	return r0, r1
 }
 
-// GetById provides a mock function with given fields: ctx, id
-func (_m *UserRepository) GetById(ctx context.Context, id int64) (error, error) {
-	ret := _m.Called(ctx, id)
+// GetById provides a mock function with given fields: id
+func (_m *UserRepository) GetById(id int64) (domain.User, error) {
+	ret := _m.Called(id)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, int64) error); ok {
-		r0 = rf(ctx, id)
+	var r0 domain.User
+	if rf, ok := ret.Get(0).(func(int64) domain.User); ok {
+		r0 = rf(id)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(domain.User)
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(context.Context, int64) error); ok {
-		r1 = rf(ctx, id)
+	if rf, ok := ret.Get(1).(func(int64) error); ok {
+		r1 = rf(id)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -72,34 +70,13 @@ func (_m *UserRepository) GetById(ctx context.Context, id int64) (error, error) 
 	return r0, r1
 }
 
-// GetUserItem provides a mock function with given fields: ctx, email
-func (_m *UserRepository) GetUserItem(ctx context.Context, email string) (error, error) {
-	ret := _m.Called(ctx, email)
+// Insert provides a mock function with given fields: u
+func (_m *UserRepository) Insert(u *domain.NewUser) error {
+	ret := _m.Called(u)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, string) error); ok {
-		r0 = rf(ctx, email)
-	} else {
-		r0 = ret.Error(0)
-	}
-
-	var r1 error
-	if rf, ok := ret.Get(1).(func(context.Context, string) error); ok {
-		r1 = rf(ctx, email)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
-// Insert provides a mock function with given fields: ctx, u
-func (_m *UserRepository) Insert(ctx context.Context, u *domain.User) error {
-	ret := _m.Called(ctx, u)
-
-	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, *domain.User) error); ok {
-		r0 = rf(ctx, u)
+	if rf, ok := ret.Get(0).(func(*domain.NewUser) error); ok {
+		r0 = rf(u)
 	} else {
 		r0 = ret.Error(0)
 	}
@@ -107,13 +84,13 @@ func (_m *UserRepository) Insert(ctx context.Context, u *domain.User) error {
 	return r0
 }
 
-// Update provides a mock function with given fields: ctx, u
-func (_m *UserRepository) Update(ctx context.Context, u *domain.User) error {
-	ret := _m.Called(ctx, u)
+// Update provides a mock function with given fields: id, u
+func (_m *UserRepository) Update(id int64, u *domain.NewUser) error {
+	ret := _m.Called(id, u)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, *domain.User) error); ok {
-		r0 = rf(ctx, u)
+	if rf, ok := ret.Get(0).(func(int64, *domain.NewUser) error); ok {
+		r0 = rf(id, u)
 	} else {
 		r0 = ret.Error(0)
 	}

@@ -3,8 +3,6 @@
 package mocks
 
 import (
-	context "context"
-
 	mock "github.com/stretchr/testify/mock"
 	domain "gitlab.com/alfred_soegiarto/training-clean-arch/domain"
 )
@@ -14,22 +12,22 @@ type ItemRepository struct {
 	mock.Mock
 }
 
-// FetchAll provides a mock function with given fields:
-func (_m *ItemRepository) FetchAll() ([]domain.ItemOutput, error) {
-	ret := _m.Called()
+// FetchAll provides a mock function with given fields: user_id
+func (_m *ItemRepository) FetchAll(user_id int64) ([]domain.Item, error) {
+	ret := _m.Called(user_id)
 
-	var r0 []domain.ItemOutput
-	if rf, ok := ret.Get(0).(func() []domain.ItemOutput); ok {
-		r0 = rf()
+	var r0 []domain.Item
+	if rf, ok := ret.Get(0).(func(int64) []domain.Item); ok {
+		r0 = rf(user_id)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]domain.ItemOutput)
+			r0 = ret.Get(0).([]domain.Item)
 		}
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func() error); ok {
-		r1 = rf()
+	if rf, ok := ret.Get(1).(func(int64) error); ok {
+		r1 = rf(user_id)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -37,20 +35,20 @@ func (_m *ItemRepository) FetchAll() ([]domain.ItemOutput, error) {
 	return r0, r1
 }
 
-// GetById provides a mock function with given fields: ctx, id
-func (_m *ItemRepository) GetById(ctx context.Context, id int64) (domain.Item, error) {
-	ret := _m.Called(ctx, id)
+// GetByName provides a mock function with given fields: user_id, appName
+func (_m *ItemRepository) GetByName(user_id int64, appName string) (domain.Item, error) {
+	ret := _m.Called(user_id, appName)
 
 	var r0 domain.Item
-	if rf, ok := ret.Get(0).(func(context.Context, int64) domain.Item); ok {
-		r0 = rf(ctx, id)
+	if rf, ok := ret.Get(0).(func(int64, string) domain.Item); ok {
+		r0 = rf(user_id, appName)
 	} else {
 		r0 = ret.Get(0).(domain.Item)
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(context.Context, int64) error); ok {
-		r1 = rf(ctx, id)
+	if rf, ok := ret.Get(1).(func(int64, string) error); ok {
+		r1 = rf(user_id, appName)
 	} else {
 		r1 = ret.Error(1)
 	}
