@@ -40,7 +40,7 @@ func (p *postgreItemRepo) FetchAll(user_id int64) (res []domain.Item, err error)
 	return items, err
 }
 
-func (p *postgreItemRepo) GetByName(user_id int64, appName string) (domain.Item, error) {
+func (p *postgreItemRepo) GetByName(user_id int64, appName string) (i domain.Item, err error) {
 
 	query := `SELECT items.id, user_id, app_name, app_email, app_password 
 								FROM items JOIN users 
@@ -50,7 +50,7 @@ func (p *postgreItemRepo) GetByName(user_id int64, appName string) (domain.Item,
 	row := p.DB.QueryRow(query, user_id, appName)
 
 	var item domain.Item
-	err := row.Scan(&item.Id, &item.User_id, &item.App_name, &item.App_email, &item.App_password)
+	err = row.Scan(&item.Id, &item.User_id, &item.App_name, &item.App_email, &item.App_password)
 
 	if err != nil {
 		if err == sql.ErrNoRows {

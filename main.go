@@ -3,10 +3,15 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/spf13/viper"
 	_ "github.com/lib/pq"
+	"github.com/spf13/viper"
+
+	_itemRepo "gitlab.com/alfred_soegiarto/training-clean-arch/item/repository"
 	_userRepo "gitlab.com/alfred_soegiarto/training-clean-arch/user/repository"
+	_userUsecase "gitlab.com/alfred_soegiarto/training-clean-arch/user/usecase"
 )
+
+var DB *sql.DB
 
 func main(){
 	viper.SetConfigFile(`config.yml`)
@@ -24,16 +29,39 @@ func main(){
 	if err != nil {
 		panic(err)
 	}
-
 	connString := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	InitDatabase(connString)
+	defer CloseDatabase()
 
-	dbConn, err := sql.Open("postgres", connString)
+	userRepo := _userRepo.NewPostgreUserRepository(DB)
+	itemRepo := _itemRepo.NewPostgreItemRepository(DB)
+	uUsecase := _userUsecase.NewUserUsecase(userRepo, itemRepo)
+	fmt.Println(uUsecase)
+}
+
+func InitDatabase(connString string) {
+	if DB == nil {
+		DB = openDatabase(connString)
+	}
+}
+
+func openDatabase(connString string) *sql.DB {
+	db, err := sql.Open("postgres", connString)
 	if err != nil {
 		fmt.Println("Failed to connect")
 		panic(err)
 	}
-
-	userRepo := _userRepo.NewPostgreUserRepository(dbConn)
-	fmt.Println(userRepo)
 	fmt.Println("Successfully connected to Database!")
+	return db
+}
+
+func CloseDatabase() {
+	err := DB.Close()
+	CheckError(err)
+}
+
+func CheckError(err error) {
+	if err != nil {
+		panic(err)
+	}
 }

@@ -71,14 +71,16 @@ func (_m *UserUsecase) GetById(id int64) (domain.User, error) {
 }
 
 // GetUserItem provides a mock function with given fields: email
-func (_m *UserUsecase) GetUserItem(email string) (domain.Item, error) {
+func (_m *UserUsecase) GetUserItem(email string) ([]domain.Item, error) {
 	ret := _m.Called(email)
 
-	var r0 domain.Item
-	if rf, ok := ret.Get(0).(func(string) domain.Item); ok {
+	var r0 []domain.Item
+	if rf, ok := ret.Get(0).(func(string) []domain.Item); ok {
 		r0 = rf(email)
 	} else {
-		r0 = ret.Get(0).(domain.Item)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]domain.Item)
+		}
 	}
 
 	var r1 error
@@ -91,13 +93,13 @@ func (_m *UserUsecase) GetUserItem(email string) (domain.Item, error) {
 	return r0, r1
 }
 
-// Insert provides a mock function with given fields: u
-func (_m *UserUsecase) Insert(u *domain.NewUser) error {
-	ret := _m.Called(u)
+// Insert provides a mock function with given fields: user
+func (_m *UserUsecase) Insert(user *domain.NewUser) error {
+	ret := _m.Called(user)
 
 	var r0 error
 	if rf, ok := ret.Get(0).(func(*domain.NewUser) error); ok {
-		r0 = rf(u)
+		r0 = rf(user)
 	} else {
 		r0 = ret.Error(0)
 	}
@@ -105,13 +107,13 @@ func (_m *UserUsecase) Insert(u *domain.NewUser) error {
 	return r0
 }
 
-// Update provides a mock function with given fields: id, u
-func (_m *UserUsecase) Update(id int64, u *domain.NewUser) error {
-	ret := _m.Called(id, u)
+// Update provides a mock function with given fields: id, user
+func (_m *UserUsecase) Update(id int64, user *domain.NewUser) error {
+	ret := _m.Called(id, user)
 
 	var r0 error
 	if rf, ok := ret.Get(0).(func(int64, *domain.NewUser) error); ok {
-		r0 = rf(id, u)
+		r0 = rf(id, user)
 	} else {
 		r0 = ret.Error(0)
 	}

@@ -14,18 +14,19 @@ type NewUser struct{
 }
 
 type UserUsecase interface {
-	FetchAll() (res []User, err error)
-	GetById(id int64) (u User, err error)
-	GetUserItem(email string) (i Item, err error)
-	Update(id int64, u *NewUser) error
-	Insert(u *NewUser) error
+	FetchAll() (users []User, err error)
+	GetById(id int64) (user User, err error)
+	GetUserItem(email string) (item []Item, err error)
+	Update(id int64, user *NewUser) error
+	Insert(user *NewUser) error
 	Delete(id int64) error
 }
 
 type UserRepository interface {
 	FetchAll() (res []User, err error)
-	GetById(id int64) (u User, err error)
-	Update(id int64, u *NewUser) error
-	Insert(u *NewUser) error
+	GetById(id int64) (user User, err error)
+	GetUserByEmail(email string) (u User, err error)
+	Update(id int64, user *NewUser) error
+	Insert(user *NewUser) error
 	Delete(id int64) error
 }

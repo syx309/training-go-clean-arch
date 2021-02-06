@@ -10,5 +10,5 @@ type Item struct {
 
 type ItemRepository interface {
 	FetchAll(user_id int64) (res []Item, err error)
-	GetByName(user_id int64, appName string) (i Item, err error)
+	GetByName(user_id int64, appName string) (item Item, err error)
 }

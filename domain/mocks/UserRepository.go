@@ -70,13 +70,34 @@ func (_m *UserRepository) GetById(id int64) (domain.User, error) {
 	return r0, r1
 }
 
-// Insert provides a mock function with given fields: u
-func (_m *UserRepository) Insert(u *domain.NewUser) error {
-	ret := _m.Called(u)
+// GetUserByEmail provides a mock function with given fields: email
+func (_m *UserRepository) GetUserByEmail(email string) (domain.User, error) {
+	ret := _m.Called(email)
+
+	var r0 domain.User
+	if rf, ok := ret.Get(0).(func(string) domain.User); ok {
+		r0 = rf(email)
+	} else {
+		r0 = ret.Get(0).(domain.User)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(string) error); ok {
+		r1 = rf(email)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// Insert provides a mock function with given fields: user
+func (_m *UserRepository) Insert(user *domain.NewUser) error {
+	ret := _m.Called(user)
 
 	var r0 error
 	if rf, ok := ret.Get(0).(func(*domain.NewUser) error); ok {
-		r0 = rf(u)
+		r0 = rf(user)
 	} else {
 		r0 = ret.Error(0)
 	}
@@ -84,13 +105,13 @@ func (_m *UserRepository) Insert(u *domain.NewUser) error {
 	return r0
 }
 
-// Update provides a mock function with given fields: id, u
-func (_m *UserRepository) Update(id int64, u *domain.NewUser) error {
-	ret := _m.Called(id, u)
+// Update provides a mock function with given fields: id, user
+func (_m *UserRepository) Update(id int64, user *domain.NewUser) error {
+	ret := _m.Called(id, user)
 
 	var r0 error
 	if rf, ok := ret.Get(0).(func(int64, *domain.NewUser) error); ok {
-		r0 = rf(id, u)
+		r0 = rf(id, user)
 	} else {
 		r0 = ret.Error(0)
 	}

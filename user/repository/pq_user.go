@@ -60,6 +60,22 @@ func (p *postgreUserRepo) GetById(id int64) (u domain.User, err error) {
 	return user, err
 }
 
+func (p *postgreUserRepo) GetUserByEmail(email string) (u domain.User, err error) {
+	query := fmt.Sprintf(`SELECT id, name, email, password FROM users WHERE LOWER(email) = LOWER('%s')`, email)
+	row := p.DB.QueryRow(query)
+	var user domain.User
+	err = row.Scan(&user.Id, &user.Name, &user.Email, &user.Password)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			fmt.Println("Zero rows found")
+			panic(err)
+		} else {
+			panic(err)
+		}
+	}
+	return user, err
+}
+
 func (p *postgreUserRepo) Update(id int64, u *domain.NewUser) error {
 	if  id< 0{
 		return errors.New("Invalid ID")
