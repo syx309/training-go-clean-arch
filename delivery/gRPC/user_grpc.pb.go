@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type UserServiceClient interface {
 	FetchAll(ctx context.Context, in *FetchAllRequest, opts ...grpc.CallOption) (*FetchAllReply, error)
 	GetById(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*User, error)
-	GetUserItem(ctx context.Context, in *EmailRequest, opts ...grpc.CallOption) (*Item, error)
+	GetUserItem(ctx context.Context, in *EmailRequest, opts ...grpc.CallOption) (*FetchAllItemReply, error)
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*GeneralReply, error)
 	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*GeneralReply, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*GeneralReply, error)
@@ -52,8 +52,8 @@ func (c *userServiceClient) GetById(ctx context.Context, in *UserRequest, opts .
 	return out, nil
 }
 
-func (c *userServiceClient) GetUserItem(ctx context.Context, in *EmailRequest, opts ...grpc.CallOption) (*Item, error) {
-	out := new(Item)
+func (c *userServiceClient) GetUserItem(ctx context.Context, in *EmailRequest, opts ...grpc.CallOption) (*FetchAllItemReply, error) {
+	out := new(FetchAllItemReply)
 	err := c.cc.Invoke(ctx, "/delivery.UserService/GetUserItem", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (c *userServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts 
 type UserServiceServer interface {
 	FetchAll(context.Context, *FetchAllRequest) (*FetchAllReply, error)
 	GetById(context.Context, *UserRequest) (*User, error)
-	GetUserItem(context.Context, *EmailRequest) (*Item, error)
+	GetUserItem(context.Context, *EmailRequest) (*FetchAllItemReply, error)
 	Update(context.Context, *UpdateRequest) (*GeneralReply, error)
 	Insert(context.Context, *InsertRequest) (*GeneralReply, error)
 	Delete(context.Context, *DeleteRequest) (*GeneralReply, error)
@@ -111,7 +111,7 @@ func (UnimplementedUserServiceServer) FetchAll(context.Context, *FetchAllRequest
 func (UnimplementedUserServiceServer) GetById(context.Context, *UserRequest) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetById not implemented")
 }
-func (UnimplementedUserServiceServer) GetUserItem(context.Context, *EmailRequest) (*Item, error) {
+func (UnimplementedUserServiceServer) GetUserItem(context.Context, *EmailRequest) (*FetchAllItemReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserItem not implemented")
 }
 func (UnimplementedUserServiceServer) Update(context.Context, *UpdateRequest) (*GeneralReply, error) {

@@ -6,7 +6,7 @@ option go_package = ".;delivery";
 service UserService{
   rpc FetchAll(FetchAllRequest) returns (FetchAllReply) {}
   rpc GetById(UserRequest) returns (User) {}
-  rpc GetUserItem(EmailRequest) returns (Item) {}
+  rpc GetUserItem(EmailRequest) returns (FetchAllItemReply) {}
   rpc Update(UpdateRequest) returns (GeneralReply) {}
   rpc Insert(InsertRequest) returns (GeneralReply) {}
   rpc Delete(DeleteRequest) returns (GeneralReply) {}
@@ -17,6 +17,11 @@ message User {
   string name = 2;
   string email = 3;
   string password = 4;
+}
+
+message FetchAllItemReply{
+  repeated Item items = 1;
+  string error = 2;
 }
 
 message Item{

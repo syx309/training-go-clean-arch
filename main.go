@@ -9,6 +9,7 @@ import (
 	_itemRepo "gitlab.com/alfred_soegiarto/training-clean-arch/item/repository"
 	_userRepo "gitlab.com/alfred_soegiarto/training-clean-arch/user/repository"
 	_userUsecase "gitlab.com/alfred_soegiarto/training-clean-arch/user/usecase"
+	_userDelivery "gitlab.com/alfred_soegiarto/training-clean-arch/delivery/gRPC"
 )
 
 var DB *sql.DB
@@ -36,7 +37,14 @@ func main(){
 	userRepo := _userRepo.NewPostgreUserRepository(DB)
 	itemRepo := _itemRepo.NewPostgreItemRepository(DB)
 	uUsecase := _userUsecase.NewUserUsecase(userRepo, itemRepo)
-	fmt.Println(uUsecase)
+	server := _userDelivery.NewUserGRPCDelivery(uUsecase)
+
+	err = server.Serve()
+	if err != nil{
+		panic(err.Error())
+	}
+	fmt.Println("Application running")
+
 }
 
 func InitDatabase(connString string) {

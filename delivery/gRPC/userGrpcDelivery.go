@@ -42,7 +42,7 @@ func (u *userGRPCDelivery) FetchAll(ctx context.Context, _ *FetchAllRequest) (*F
 	}
 	return &FetchAllReply{
 		Users: results,
-		Error: "No errors",
+		Error: "Fetch User Successful",
 	}, err
 }
 
@@ -50,8 +50,29 @@ func (u *userGRPCDelivery) GetById(ctx context.Context, request *UserRequest) (*
 	panic("implement me")
 }
 
-func (u *userGRPCDelivery) GetUserItem(ctx context.Context, request *EmailRequest) (*Item, error) {
-	panic("implement me")
+func (u *userGRPCDelivery) GetUserItem(ctx context.Context, request *EmailRequest) (*FetchAllItemReply, error) {
+	response, err := u.userUsecase.GetUserItem(request.GetEmail())
+	var items []*Item
+	if err != nil{
+		return &FetchAllItemReply{
+			Items: items,
+			Error: err.Error(),
+		}, err
+	}
+	for _, index := range response{
+		itemId, _ := strconv.ParseInt(index.Id,10,64)
+		item := &Item{
+			ItemId: itemId,
+			AppName: index.App_name,
+			AppEmail: index.App_email,
+			AppPassword: index.App_password,
+		}
+		items = append(items, item)
+	}
+	return &FetchAllItemReply{
+		Items: items,
+		Error: "Fetch Item Successful",
+	},err
 }
 
 func (u *userGRPCDelivery) Update(ctx context.Context, request *UpdateRequest) (*GeneralReply, error) {
