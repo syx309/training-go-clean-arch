@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package delivery;
+option go_package = ".;delivery";
+
+service UserService{
+  rpc FetchAll(FetchAllRequest) returns (FetchAllReply) {}
+  rpc GetById(UserRequest) returns (User) {}
+  rpc GetUserItem(EmailRequest) returns (Item) {}
+  rpc Update(UpdateRequest) returns (GeneralReply) {}
+  rpc Insert(InsertRequest) returns (GeneralReply) {}
+  rpc Delete(DeleteRequest) returns (GeneralReply) {}
+}
+
+message User {
+  int64 user_id = 1;
+  string name = 2;
+  string email = 3;
+  string password = 4;
+}
+
+message Item{
+  int64 item_id = 1;
+  string appName = 2;
+  string appEmail = 3;
+  string appPassword = 4;
+}
+
+message FetchAllRequest{
+}
+
+message FetchAllReply{
+  repeated User users = 1;
+  string error = 2;
+}
+
+message UserRequest{
+  int64 id = 1;
+}
+
+message EmailRequest{
+  string email = 1;
+}
+
+message UpdateRequest{
+  int64 user_id = 1;
+  string name = 2;
+  string email = 3;
+  string password = 4;
+}
+
+message InsertRequest{
+  string name = 2;
+  string email = 3;
+  string password = 4;
+}
+
+message DeleteRequest{
+  int64 user_id = 1;
+}
+
+message GeneralReply{
+  string error = 1;
+}
