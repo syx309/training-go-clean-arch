@@ -43,8 +43,8 @@ func (p *postgreUserRepo) FetchAll() (res []domain.User, err error) {
 }
 
 func (p *postgreUserRepo) GetById(id int64) (u domain.User, err error) {
-	query := fmt.Sprintf(`SELECT id, name, email, password FROM users WHERE id = %s`, id)
-	row := p.DB.QueryRow(query)
+	query := fmt.Sprintf(`SELECT id, name, email, password FROM users WHERE id = $1`)
+	row := p.DB.QueryRow(query, id)
 
 	var user domain.User
 	err = row.Scan(&user.Id, &user.Name, &user.Email, &user.Password)
@@ -80,8 +80,8 @@ func (p *postgreUserRepo) Update(id int64, u *domain.NewUser) error {
 	if  id< 0{
 		return errors.New("Invalid ID")
 	}
-	query := fmt.Sprintf("UPDATE users SET name = \"%s\", email = \"%s\", password = \"%s\" WHERE id = %s", u.Name, u.Email, u.Password, id)
-	_, err := p.DB.Exec(query)
+	query := fmt.Sprintf("UPDATE users SET name = '%s', email = '%s', password = '%s' WHERE id = $1", u.Name, u.Email, u.Password)
+	_, err := p.DB.Exec(query,id)
 	if err != nil {
 		panic(err)
 	}
@@ -89,7 +89,7 @@ func (p *postgreUserRepo) Update(id int64, u *domain.NewUser) error {
 }
 
 func (p *postgreUserRepo) Insert(u *domain.NewUser) error {
-	query := fmt.Sprintf("INSERT INTO users (name, email, password) VALUES (\"%s\", \"%s\", \"%s\")", u.Name, u.Email, u.Password)
+	query := fmt.Sprintf("INSERT INTO users (name, email, password) VALUES ('%s', '%s', '%s')", u.Name, u.Email, u.Password)
 	_, err := p.DB.Exec(query)
 	if err != nil {
 		panic(err)
@@ -98,8 +98,8 @@ func (p *postgreUserRepo) Insert(u *domain.NewUser) error {
 }
 
 func (p *postgreUserRepo) Delete(id int64) error {
-	query := fmt.Sprintf("DELETE FROM users WHERE $1")
-	_, err := p.DB.Exec(query,1)
+	query := fmt.Sprintf("DELETE FROM users WHERE id = $1")
+	_, err := p.DB.Exec(query,id)
 	if err != nil {
 		panic(err)
 	}

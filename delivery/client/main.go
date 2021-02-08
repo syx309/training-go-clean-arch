@@ -25,16 +25,43 @@ func main() {
 
 	client := delivery.NewUserServiceClient(conn)
 
-	testRequest := &delivery.FetchAllRequest{
+	//testRequest := &delivery.FetchAllRequest{
+	//}
+	//response, err := client.FetchAll(context.Background(), testRequest)
+	//log.Println(response)
+
+	//emailRequest := &delivery.EmailRequest{
+	//	Email: mockUser.Email,
+	//}
+	//response2, err := client.GetUserItem(context.Background(),emailRequest)
+	//log.Println(response2)
+
+	//userReq := &delivery.UserRequest{
+	//	Id: 2,
+	//}
+	//response, err := client.GetById(context.Background(),userReq)
+	//log.Println(response)
+
+	//updateReq := &delivery.UpdateRequest{
+	//	UserId: 4,
+	//	Name: "Bryan",
+	//	Email: "emaildiganti@gmail.com",
+	//	Password: mockUser.Password,
+	//}
+	//response4, err := client.Update(context.Background(),updateReq)
+	//log.Println(response4)
+
+	//insertReq := &delivery.InsertRequest{
+	//	Name: "userBaru",
+	//	Email: "emailBaru@gmail.com",
+	//	Password: mockUser.Password,
+	//}
+	//response5, err := client.Insert(context.Background(),insertReq)
+	//log.Println(response5)
+
+	deleteReq := &delivery.DeleteRequest{
+		UserId: 6,
 	}
-
-	response, err := client.FetchAll(context.Background(), testRequest)
-	log.Println(response)
-
-	emailRequest := &delivery.EmailRequest{
-		Email: mockUser.Email,
-	}
-
-	response2, err := client.GetUserItem(context.Background(),emailRequest)
-	log.Println(response2)
+	response6, err := client.Delete(context.Background(),deleteReq)
+	log.Println(response6)
 }

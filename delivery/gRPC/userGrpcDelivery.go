@@ -1,6 +1,7 @@
 package delivery
 
 import (
+	"errors"
 	"fmt"
 	"gitlab.com/alfred_soegiarto/training-clean-arch/domain"
 	"golang.org/x/net/context"
@@ -47,7 +48,17 @@ func (u *userGRPCDelivery) FetchAll(ctx context.Context, _ *FetchAllRequest) (*F
 }
 
 func (u *userGRPCDelivery) GetById(ctx context.Context, request *UserRequest) (*User, error) {
-	panic("implement me")
+	response, err := u.userUsecase.GetById(request.GetId())
+	if err!=nil{
+		return &User{}, errors.New("Failed to get user by id")
+	}
+	id, err := strconv.ParseInt(response.Id, 10, 64)
+	return &User{
+		UserId:   id,
+		Name:     response.Name,
+		Email:    response.Email,
+		Password: response.Password,
+	}, err
 }
 
 func (u *userGRPCDelivery) GetUserItem(ctx context.Context, request *EmailRequest) (*FetchAllItemReply, error) {
@@ -76,15 +87,48 @@ func (u *userGRPCDelivery) GetUserItem(ctx context.Context, request *EmailReques
 }
 
 func (u *userGRPCDelivery) Update(ctx context.Context, request *UpdateRequest) (*GeneralReply, error) {
-	panic("implement me")
+	err := u.userUsecase.Update(request.GetUserId(),
+		&domain.NewUser{
+		Name: request.GetName(),
+		Email: request.GetEmail(),
+		Password: request.GetPassword(),
+	})
+	if err != nil{
+		return &GeneralReply{
+			Error: "Failed to update user",
+		},err
+	}
+	return &GeneralReply{
+		Error: "Update User Successful",
+	},err
 }
 
 func (u *userGRPCDelivery) Insert(ctx context.Context, request *InsertRequest) (*GeneralReply, error) {
-	panic("implement me")
+	err := u.userUsecase.Insert(&domain.NewUser{
+		Name: request.GetName(),
+		Email: request.GetEmail(),
+		Password: request.GetPassword(),
+	})
+	if err != nil{
+		return &GeneralReply{
+			Error: "Failed to insert user",
+		},err
+	}
+	return &GeneralReply{
+		Error: "Insert User Successful",
+	},err
 }
 
 func (u *userGRPCDelivery) Delete(ctx context.Context, request *DeleteRequest) (*GeneralReply, error) {
-	panic("implement me")
+	err := u.userUsecase.Delete(request.GetUserId())
+	if err!=nil{
+		return &GeneralReply{
+			Error: "Failed to get user by id",
+		}, err
+	}
+	return &GeneralReply{
+		Error: "Successfully deleted the user by id",
+	}, err
 }
 
 // Serve the gRPC service
