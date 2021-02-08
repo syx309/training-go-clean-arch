@@ -25,22 +25,22 @@ func main() {
 
 	client := delivery.NewUserServiceClient(conn)
 
-	//testRequest := &delivery.FetchAllRequest{
-	//}
-	//response, err := client.FetchAll(context.Background(), testRequest)
-	//log.Println(response)
+	testRequest := &delivery.FetchAllRequest{
+	}
+	response, err := client.FetchAll(context.Background(), testRequest)
+	log.Println(response)
 
-	//emailRequest := &delivery.EmailRequest{
-	//	Email: mockUser.Email,
-	//}
-	//response2, err := client.GetUserItem(context.Background(),emailRequest)
-	//log.Println(response2)
+	emailRequest := &delivery.EmailRequest{
+		Email: mockUser.Email,
+	}
+	response2, err := client.GetUserItem(context.Background(),emailRequest)
+	log.Println(response2)
 
-	//userReq := &delivery.UserRequest{
-	//	Id: 2,
-	//}
-	//response, err := client.GetById(context.Background(),userReq)
-	//log.Println(response)
+	userReq := &delivery.UserRequest{
+		Id: 1,
+	}
+	response3, err := client.GetById(context.Background(),userReq)
+	log.Println(response3)
 
 	//updateReq := &delivery.UpdateRequest{
 	//	UserId: 4,
@@ -59,9 +59,9 @@ func main() {
 	//response5, err := client.Insert(context.Background(),insertReq)
 	//log.Println(response5)
 
-	deleteReq := &delivery.DeleteRequest{
-		UserId: 6,
-	}
-	response6, err := client.Delete(context.Background(),deleteReq)
-	log.Println(response6)
+	//deleteReq := &delivery.DeleteRequest{
+	//	UserId: 6,
+	//}
+	//response6, err := client.Delete(context.Background(),deleteReq)
+	//log.Println(response6)
 }
